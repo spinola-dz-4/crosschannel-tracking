@@ -1,0 +1,250 @@
+{
+    "exportFormatVersion": 1.3,
+    "exportTime": "2015-10-27 03:14:22",
+    "containerVersion": {
+        "accountId": "16870744",
+        "containerId": "1666452",
+        "containerVersionId": "0",
+        "deleted": false,
+        "container": {
+            "accountId": "16870744",
+            "containerId": "1666452",
+            "name": "sourcookie",
+            "publicId": "GTM-MQ3897",
+            "timeZoneCountryId": "US",
+            "timeZoneId": "America/Los_Angeles",
+            "notes": "",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1445915630852",
+            "enabledBuiltInVariable": [
+                "PAGE_URL",
+                "PAGE_HOSTNAME",
+                "PAGE_PATH",
+                "REFERRER",
+                "EVENT",
+                "CLICK_ELEMENT",
+                "CLICK_CLASSES",
+                "CLICK_ID",
+                "CLICK_TARGET",
+                "CLICK_URL",
+                "CLICK_TEXT",
+                "FORM_ELEMENT",
+                "FORM_CLASSES",
+                "FORM_ID",
+                "FORM_TARGET",
+                "FORM_URL",
+                "FORM_TEXT",
+                "ERROR_MESSAGE",
+                "ERROR_URL",
+                "ERROR_LINE",
+                "DEBUG_MODE"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "tagId": "1",
+                "name": "sourceCookie - cHTML - Landingpage",
+                "type": "html",
+                "liveOnly": false,
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script> \n//get referrer info and shorten it\n  var ref = {{Referrer}}\n  function extractDomain(url) {\n    var domain;\n    //find & remove protocol (http, ftp, etc.) and get domain\n    if (url.indexOf(\"://\") > -1) {\n        domain = url.split('/')[2];\n    }\n    else {\n        domain = url.split('/')[0];\n    }\n\n    //find & remove port number\n    domain = domain.split(':')[0];\n\n    return domain;\n}\n  ref = extractDomain(ref);\n  \n//create cookie  \n \n    function createCookie(name,value,days) {\n\t\tif (days) {\n\t\tvar date = new Date();\n\t\tdate.setTime(date.getTime()+(days*24*60*60*1000));\n\t\tvar expires = \"; expires=\"+date.toGMTString();\n\t\t}\n\t\telse var expires = \"\";\n\t\tdocument.cookie = name+\"=\"+value+expires+\"; path=/\";\n    }\n  \n  var cookie = \"\";\n  //check if the source cookie is already present and append |\n  if({{sourceCookie}}){cookie = {{sourceCookie}} + \"|\"};\n  \n  //check if UTMs are present and set cookie content to the source utm\n  if({{utm_source}}){\n  createCookie(\"source\",cookie+{{utm_source}},1000)\n  //check if gclid is present and set cookie content to AdWords\n  }else if({{gclid}}){\n    createCookie(\"source\",cookie+\"AdWords\",1000)\n  //check if referrer is present and set cookie content to the referrer\n  }else if(cookie && ref){\n    createCookie(\"source\",cookie+ref,1000)\n  }else{\n    createCookie(\"source\",ref,1000)\n  };\n  </script>"
+                    }
+                ],
+                "fingerprint": "0",
+                "firingTriggerId": [
+                    "1",
+                    "2",
+                    "3"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT"
+            }
+        ],
+        "fingerprint": "0",
+        "trigger": [
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "triggerId": "2",
+                "name": "Landingpage",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Referrer}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "demoshop.com"
+                            },
+                            {
+                                "type": "BOOLEAN",
+                                "key": "negate",
+                                "value": "true"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "MATCH_REGEX",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Referrer}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "^$"
+                            },
+                            {
+                                "type": "BOOLEAN",
+                                "key": "negate",
+                                "value": "true"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1445915630500"
+            },
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "triggerId": "3",
+                "name": "gclid",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{gclid}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "undefined"
+                            },
+                            {
+                                "type": "BOOLEAN",
+                                "key": "negate",
+                                "value": "true"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1445915630676"
+            },
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "triggerId": "1",
+                "name": "utm",
+                "type": "PAGEVIEW",
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{utm_source}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "undefined"
+                            },
+                            {
+                                "type": "BOOLEAN",
+                                "key": "negate",
+                                "value": "true"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1445915630124"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "variableId": "3",
+                "name": "gclid",
+                "type": "u",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "component",
+                        "value": "QUERY"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "queryKey",
+                        "value": "gclid"
+                    }
+                ],
+                "fingerprint": "0"
+            },
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "variableId": "1",
+                "name": "sourceCookie",
+                "type": "k",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "source"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "decodeCookie",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "0"
+            },
+            {
+                "accountId": "16870744",
+                "containerId": "1666452",
+                "variableId": "2",
+                "name": "utm_source",
+                "type": "u",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "component",
+                        "value": "QUERY"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "queryKey",
+                        "value": "utm_source"
+                    }
+                ],
+                "fingerprint": "0"
+            }
+        ]
+    }
+}
